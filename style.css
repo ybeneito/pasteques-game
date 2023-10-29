@@ -1,8 +1,14 @@
-body {
+.wrapper {
   display: flex;
   justify-content: space-between;
   align-content: center;
-  margin: 5vh auto;
+  margin: 5vh auto 2vh auto;
+}
+
+footer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .flex {
