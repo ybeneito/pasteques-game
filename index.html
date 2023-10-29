@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style.css" />
+    <title>Pastèques-game</title>
+  </head>
+  <body>
+    <section class="flex">
+      <h1>Règles</h1>
+      <p>Le but de ce jeu est de reussir à stocker le plus de pastèques dans la boite sans toucher la ligne de fin.</p>
+      <p>Chaque fois que 2 fruits identiques entrent en collision, ceux ci fusionnent pour faire un fruit plus gros.</p>
+      <p>Pour vous déplacer utiliser les flèches ou les touches "Q" et "D" de votre clavier, "ESPACE" pour lacher un fruit.</p>
+      <div>
+        <p>évolution des fruits: </p>
+        <span class="fruit1"></span>
+        <span class="fruit2"></span>
+        <span class="fruit3"></span>
+        <span class="fruit4"></span>
+        <span class="fruit5"></span>
+        <span class="fruit6"></span>
+        <span class="fruit7"></span>
+        <span class="fruit8"></span>
+        <span class="fruit9"></span>
+        <span class="fruit10"></span>
+        <span class="fruit11"></span>
+      </div>
+    </section>
+    <div id="app"></div>
+    <section class="flex">
+      <h1>INFO</h1>
+      <p>Score: <span id="displayScore"></span></p>
+      <p>Top score: <span id="displayTopScore"></span></p>
+    </section>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
