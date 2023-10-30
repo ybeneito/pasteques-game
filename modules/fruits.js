@@ -17,7 +17,7 @@ export const FRUITS = [
         score: 4
       },
       {
-        label: "kumkwat",
+        label: "lemon",
         radius: 85 / 2,
         color: "#FFAF02",
         score: 8
@@ -53,10 +53,10 @@ export const FRUITS = [
         score: 248
       },
       {
-        label: "melon",
+        label: "kiwi",
         radius: 270 / 2,
         color: "#89CE13",
-        score: 498
+        score: 496
       },
       {
         label: "watermelon",

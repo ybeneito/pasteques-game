@@ -10,18 +10,18 @@ export const getBox = (world) => {
     })
     const ground = Bodies.rectangle(310, 820, 620, 60, {
         isStatic: true,
-        render: {fillStyle: '#113B29'}
+        render: {fillStyle: '#30A46C'}
       }
       );
       
       const leftWall = Bodies.rectangle(15,395,30,790, {
         isStatic: true,
-        render: {fillStyle: '#113B29'}
+        render: {fillStyle: '#30A46C'}
       }) 
       
       const rightWall = Bodies.rectangle(605,395,30,790, {
         isStatic: true,
-        render: {fillStyle: '#113B29'}
+        render: {fillStyle: '#30A46C'}
       })
       
       const box = [top, ground, leftWall, rightWall]

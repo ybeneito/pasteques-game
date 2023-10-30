@@ -8,6 +8,11 @@ body {
   overflow: hidden;
   font-family: 'Kodchasan';
   font-weight: 400;
+  background-color: #171918;
+  color: #AFB5AD
+}
+a {
+  color: #AFB5AD
 }
 
 .wrapper {
@@ -15,6 +20,10 @@ body {
   justify-content: space-between;
   align-content: center;
   margin: 5vh auto 2vh auto;
+}
+
+.img {
+  width: 2rem;
 }
 
 footer {
@@ -37,91 +46,6 @@ h1, h2, h3, h4, h5 {
   width: 650px;
 }
 
-.fruit1 {
-  height: 25px;
-  width: 25px;
-  background-color: #F20306;
-  border-radius: 50%;
-  display: inline-block;
+.margin-top {
+  margin-top: 5em;
 }
-
-.fruit2 {
-  height: 25px;
-  width: 25px;
-  background-color: #FF624C;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.fruit3 {
-  height: 25px;
-  width: 25px;
-  background-color: #A969FF;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.fruit4 {
-  height: 25px;
-  width: 25px;
-  background-color: #FFAF02;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.fruit5 {
-  height: 25px;
-  width: 25px;
-  background-color: #FC8611;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.fruit6 {
-  height: 25px;
-  width: 25px;
-  background-color: #F41615;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.fruit7 {
-  height: 25px;
-  width: 25px;
-  background-color: #FDF176;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.fruit8 {
-  height: 25px;
-  width: 25px;
-  background-color: #FEB6AC;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.fruit9 {
-  height: 25px;
-  width: 25px;
-  background-color: #F7E608;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.fruit10 {
-  height: 25px;
-  width: 25px;
-  background-color: #89CE13;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.fruit11 {
-  height: 25px;
-  width: 25px;
-  background-color: #26AA1E;
-  border-radius: 50%;
-  display: inline-block;
-}
-

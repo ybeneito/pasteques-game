@@ -13,7 +13,14 @@ export const AddNewFruit = (current) => {
     const fruit = Bodies.circle(300,50, f.radius, {
         label: f.label,
         isSleeping: true,
-        render: {fillStyle: f.color},
+        render: {
+          fillStyle: f.color,
+          sprite: {
+            texture: `/${f.label}.png`,
+            xScale: f.radius / 100,
+            yScale: f.radius / 100
+          }
+        },
         restitution: 0.2
       })
 

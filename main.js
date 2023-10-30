@@ -118,7 +118,14 @@ Events.on(engine, 'collisionStart', (event) => {
       const index = FRUITS.findIndex(fruit => fruit.label === collision.bodyA.label)
       const fusion = FRUITS[index + 1]
       const body = Bodies.circle(collision.collision.supports[0].x, collision.collision.supports[0].y, fusion.radius, {
-        render: {fillStyle: fusion.color},
+        render: {
+          fillStyle: fusion.color,
+          sprite: {
+            texture: `/${fusion.label}.png`,
+            xScale: fusion.radius / 100,
+            yScale: fusion.radius / 100
+          }
+        },
         label: fusion.label,
         restitution: 0.2
       })
