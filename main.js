@@ -127,10 +127,12 @@ Events.on(engine, 'collisionStart', (event) => {
       displayScore.innerHTML = score
     }
     if((collision.bodyA.label === "top" || collision.bodyB.label === "top") && !disableAction) {
+      let record = false
       if(score > localStorage.getItem("topScore")) {
           localStorage.setItem("topScore", score)
+          record = true
         }
-        alert("GAME OVER", score)
+        record ? alert(`GAME OVER ---Record Battu--- score: ${score}`) : alert(`GAME OVER score: ${score}`)
         window.location.reload()
       }
     }
