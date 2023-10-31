@@ -110,10 +110,7 @@ Events.on(engine, 'collisionStart', (event) => {
     // Frits identiques
     if (collision.bodyA.label ===  collision.bodyB.label) {
       // On laisse les watermelon dans le terrain
-      if(collision.bodyA.label === "watermelon") {
-        console.log("watermelon")
-        return
-      }
+      if(collision.bodyA.label === "watermelon") return
       World.remove(world, [collision.bodyA, collision.bodyB]) 
       const index = FRUITS.findIndex(fruit => fruit.label === collision.bodyA.label)
       const fusion = FRUITS[index + 1]
@@ -122,8 +119,8 @@ Events.on(engine, 'collisionStart', (event) => {
           fillStyle: fusion.color,
           sprite: {
             texture: `/${fusion.label}.png`,
-            xScale: fusion.radius / 100,
-            yScale: fusion.radius / 100
+            xScale: (fusion.radius - 5) / 100 ,
+            yScale: (fusion.radius - 5) / 100
           }
         },
         label: fusion.label,
