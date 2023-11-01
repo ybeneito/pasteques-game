@@ -53,7 +53,7 @@ export const FRUITS = [
         score: 248
       },
       {
-        label: "kiwi",
+        label: "melon",
         radius: 135,
         color: "#89CE13",
         score: 496

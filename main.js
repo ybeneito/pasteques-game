@@ -1,5 +1,5 @@
 import { Engine, Render, Runner, World, Events, Bodies, Body, Sleeping } from "matter-js"
-import { AddNewFruit, AddNewFruit2 } from "./modules/addNewFruit"
+import { AddNewFruit } from "./modules/addNewFruit"
 import { getBox } from "./modules/box"
 import { FRUITS } from "./modules/fruits"
 
@@ -7,6 +7,10 @@ const resetScore = document.getElementById('resetScore')
 const displayScore = document.getElementById('displayScore')
 let score = 0
 displayScore.innerHTML = score
+
+const displayWatermelons = document.getElementById('displayWatermelons')
+let watermelons = 0
+displayWatermelons.innerHTML = watermelons
 
 const displayTopScore = document.getElementById('displayTopScore')
 let topScore = localStorage.getItem("topScore") || 0
@@ -37,18 +41,13 @@ const world = engine.world
 // Permet de rajouter les rebords du terrain
 getBox(world)
 
-// Gestion du fruit utilisé
-/**
- let currentFruit = {label: "",radius: "",color: ""} 
-currentFruit = AddNewFruit(currentFruit)
- */
 
-let pair = AddNewFruit2()
+// Gestion des 2 premiers fruits
+let pair = AddNewFruit()
 let currentFruit = pair[0]
 let nextFruit = pair[1]
-console.log("main current: ", pair)
-
 World.add(world, pair)
+
 
 // Render de l'app
 Render.run(render)
@@ -68,7 +67,7 @@ Runner.run(runner, engine)
           interval = setInterval(() => {
               if(currentFruit.position.x - 20 > 30)
               Body.setPosition(currentFruit, {
-                  x: currentFruit.position.x - 1,
+                  x: currentFruit.position.x - 2,
                   y: currentFruit.position.y
               })
           }, 5);
@@ -80,7 +79,7 @@ Runner.run(runner, engine)
           interval = setInterval(() => {
               if(currentFruit.position.x + 20 < 590)
               Body.setPosition(currentFruit, {
-                  x: currentFruit.position.x + 1,
+                  x: currentFruit.position.x + 2,
                   y: currentFruit.position.y
               })
           }, 5);
@@ -91,10 +90,10 @@ Runner.run(runner, engine)
           disableAction = true;
           Sleeping.set(currentFruit, false)
           setTimeout(() => {
-              console.log('getNewCalled:', nextFruit)
+    
               World.remove(world, nextFruit)
-              let currentPair = AddNewFruit2(nextFruit)
-              console.log('currentPair:', currentPair)
+              let currentPair = AddNewFruit(nextFruit)
+
               currentFruit = currentPair[0]
               nextFruit = currentPair[1]
               World.add(world, [currentFruit, nextFruit])
@@ -123,27 +122,36 @@ Events.on(engine, 'collisionStart', (event) => {
   event.pairs.forEach(collision => {
     // Frits identiques
     if (collision.bodyA.label ===  collision.bodyB.label) {
-      // On laisse les watermelon dans le terrain
-      if(collision.bodyA.label === "watermelon") return
-      World.remove(world, [collision.bodyA, collision.bodyB]) 
-      const index = FRUITS.findIndex(fruit => fruit.label === collision.bodyA.label)
-      const fusion = FRUITS[index + 1]
-      const body = Bodies.circle(collision.collision.supports[0].x, collision.collision.supports[0].y, fusion.radius, {
-        render: {
-          fillStyle: fusion.color,
-          sprite: {
-            texture: `/${fusion.label}.png`,
-            xScale: (fusion.radius - 5) / 100 ,
-            yScale: (fusion.radius - 5) / 100
-          }
-        },
-        label: fusion.label,
-        restitution: 0.2
-      })
-      World.add(world, [body])
-      score += fusion.score 
-      displayScore.innerHTML = score
-    }
+      // On retire les watermelon du terrain
+      if(collision.bodyA.label === "watermelon") {
+        const index = FRUITS.findIndex(fruit => fruit.label === collision.bodyA.label)
+        const watermelon = FRUITS[index]
+        displayScore += watermelon.score
+        watermelon += 1
+        World.remove(world, [collision.bodyA, collision.bodyB])
+        return;
+      } else {
+        World.remove(world, [collision.bodyA, collision.bodyB]) 
+        const index = FRUITS.findIndex(fruit => fruit.label === collision.bodyA.label)
+        const fusion = FRUITS[index + 1]
+        const body = Bodies.circle(collision.collision.supports[0].x, collision.collision.supports[0].y, fusion.radius, {
+          render: {
+            fillStyle: fusion.color,
+            sprite: {
+              texture: `/${fusion.label}.png`,
+              xScale: fusion.radius / 115 ,
+              yScale: fusion.radius / 115
+            }
+          },
+          label: fusion.label,
+          restitution: 0.2
+        })
+        World.add(world, [body])
+        score += fusion.score 
+        displayScore.innerHTML = score
+      }
+  }
+
     if((collision.bodyA.label === "top" || collision.bodyB.label === "top") && !disableAction) {
       let record = false
       if(score > localStorage.getItem("topScore")) {
@@ -161,6 +169,12 @@ Events.on(engine, 'collisionStart', (event) => {
 resetScore.addEventListener("click", () => { 
   localStorage.setItem("topScore", 0)
   window.location.reload()
+})
+
+
+const wireframes = document.getElementById('wireframe')
+wireframes.addEventListener('click', () => {
+  render.options.wireframes = !render.options.wireframes
 })
 
 
