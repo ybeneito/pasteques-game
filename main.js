@@ -1,8 +1,9 @@
 import { Engine, Render, Runner, World, Events, Bodies, Body, Sleeping } from "matter-js"
-import { AddNewFruit } from "./modules/addNewFruit"
+import { AddNewFruit, AddNewFruit2 } from "./modules/addNewFruit"
 import { getBox } from "./modules/box"
 import { FRUITS } from "./modules/fruits"
 
+const resetScore = document.getElementById('resetScore')
 const displayScore = document.getElementById('displayScore')
 let score = 0
 displayScore.innerHTML = score
@@ -37,9 +38,17 @@ const world = engine.world
 getBox(world)
 
 // Gestion du fruit utilisé
-let currentFruit = {label: "",radius: "",color: ""} 
+/**
+ let currentFruit = {label: "",radius: "",color: ""} 
 currentFruit = AddNewFruit(currentFruit)
-World.add(world, [currentFruit])
+ */
+
+let pair = AddNewFruit2()
+let currentFruit = pair[0]
+let nextFruit = pair[1]
+console.log("main current: ", pair)
+
+World.add(world, pair)
 
 // Render de l'app
 Render.run(render)
@@ -82,8 +91,13 @@ Runner.run(runner, engine)
           disableAction = true;
           Sleeping.set(currentFruit, false)
           setTimeout(() => {
-              currentFruit = AddNewFruit(currentFruit)
-              World.add(world, currentFruit)
+              console.log('getNewCalled:', nextFruit)
+              World.remove(world, nextFruit)
+              let currentPair = AddNewFruit2(nextFruit)
+              console.log('currentPair:', currentPair)
+              currentFruit = currentPair[0]
+              nextFruit = currentPair[1]
+              World.add(world, [currentFruit, nextFruit])
               disableAction = false;
           }, 1000);
           break;
@@ -142,4 +156,11 @@ Events.on(engine, 'collisionStart', (event) => {
     }
   )
 })
+
+// Si bug de topScore possibilité de l'éffacer 
+resetScore.addEventListener("click", () => { 
+  localStorage.setItem("topScore", 0)
+  window.location.reload()
+})
+
 
