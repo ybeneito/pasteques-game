@@ -171,10 +171,11 @@ resetScore.addEventListener("click", () => {
   window.location.reload()
 })
 
-
+/*
 const wireframes = document.getElementById('wireframe')
 wireframes.addEventListener('click', () => {
   render.options.wireframes = !render.options.wireframes
 })
+*/
 
 
