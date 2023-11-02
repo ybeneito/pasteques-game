@@ -2,6 +2,23 @@ import { Engine, Render, Runner, World, Events, Bodies, Body, Sleeping } from "m
 import { AddNewFruit } from "./modules/addNewFruit"
 import { getBox } from "./modules/box"
 import { FRUITS } from "./modules/fruits"
+import { Howl } from "howler"
+
+
+/**
+  const pop = new Howl({
+  src: "/test1.wav"
+})
+
+const jump = new Howl({
+  src: "/test2.wav"
+})
+*/
+
+
+
+
+let nextImg = document.getElementById('imgNext')
 
 const resetScore = document.getElementById('resetScore')
 const displayScore = document.getElementById('displayScore')
@@ -46,7 +63,8 @@ getBox(world)
 let pair = AddNewFruit()
 let currentFruit = pair[0]
 let nextFruit = pair[1]
-World.add(world, pair)
+nextImg.setAttribute("src", `/${nextFruit.label}.png`)
+World.add(world, currentFruit)
 
 
 // Render de l'app
@@ -89,6 +107,7 @@ Runner.run(runner, engine)
       case "Space":
           disableAction = true;
           Sleeping.set(currentFruit, false)
+         // jump.play()
           setTimeout(() => {
     
               World.remove(world, nextFruit)
@@ -96,7 +115,8 @@ Runner.run(runner, engine)
 
               currentFruit = currentPair[0]
               nextFruit = currentPair[1]
-              World.add(world, [currentFruit, nextFruit])
+              nextImg.setAttribute("src", `/${nextFruit.label}.png`)
+              World.add(world, [currentFruit])
               disableAction = false;
           }, 1000);
           break;
@@ -122,6 +142,7 @@ Events.on(engine, 'collisionStart', (event) => {
   event.pairs.forEach(collision => {
     // Frits identiques
     if (collision.bodyA.label ===  collision.bodyB.label) {
+      // pop.play()
       // On retire les watermelon du terrain
       if(collision.bodyA.label === "watermelon") {
         const index = FRUITS.findIndex(fruit => fruit.label === collision.bodyA.label)
