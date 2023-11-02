@@ -21,7 +21,7 @@ const jump = new Howl({
 let nextImg = document.getElementById('imgNext')
 
 const resetScore = document.getElementById('resetScore')
-const displayScore = document.getElementById('displayScore')
+let displayScore = document.getElementById('displayScore')
 let score = 0
 displayScore.innerHTML = score
 
