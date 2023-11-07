@@ -14,12 +14,12 @@ export const getBox = (world) => {
       }
       );
       
-      const leftWall = Bodies.rectangle(15,395,30,790, {
+      const leftWall = Bodies.rectangle(15,395,60,790, {
         isStatic: true,
         render: {fillStyle: '#30A46C'}
       }) 
       
-      const rightWall = Bodies.rectangle(605,395,30,790, {
+      const rightWall = Bodies.rectangle(605,395,60,790, {
         isStatic: true,
         render: {fillStyle: '#30A46C'}
       })

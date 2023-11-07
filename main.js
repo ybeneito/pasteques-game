@@ -83,7 +83,8 @@ Runner.run(runner, engine)
       case "KeyA":
           if(interval) return;
           interval = setInterval(() => {
-              if(currentFruit.position.x - 20 > 30)
+            let currentRadius = (currentFruit.vertices[0].x - currentFruit.vertices[9].x) / 2
+              if((currentFruit.position.x + (currentRadius/2)) > (60 + currentRadius))
               Body.setPosition(currentFruit, {
                   x: currentFruit.position.x - 2,
                   y: currentFruit.position.y
@@ -95,7 +96,8 @@ Runner.run(runner, engine)
       case "KeyD":
           if(interval) return;
           interval = setInterval(() => {
-              if(currentFruit.position.x + 20 < 590)
+            let currentRadius = (currentFruit.vertices[0].x - currentFruit.vertices[9].x) / 2
+              if((currentFruit.position.x + (currentRadius/2)) < 560)
               Body.setPosition(currentFruit, {
                   x: currentFruit.position.x + 2,
                   y: currentFruit.position.y
@@ -109,10 +111,8 @@ Runner.run(runner, engine)
           Sleeping.set(currentFruit, false)
          // jump.play()
           setTimeout(() => {
-    
               World.remove(world, nextFruit)
               let currentPair = AddNewFruit(nextFruit)
-
               currentFruit = currentPair[0]
               nextFruit = currentPair[1]
               nextImg.setAttribute("src", `/${nextFruit.label}.png`)
@@ -128,6 +128,7 @@ window.onkeyup = (e) => {
       case "ArrowLeft":
       case "ArrowRight":
       case "ArrowDown":
+      case "Space":
       case "KeyA":
       case "KeyD":
           clearInterval(interval)
