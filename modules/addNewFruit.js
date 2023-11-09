@@ -17,9 +17,7 @@ export const AddNewFruit = (old = base) => {
   if(old.label === base.label) {
     let rdmIndex = Math.floor(Math.random() * 5)
     let rdmIndexNext = Math.floor(Math.random() * 5)
-    if(rdmIndex === rdmIndexNext) {
-      return AddNewFruit(old)
-    }
+
     f = FRUITS[rdmIndex]
     newFruit = Bodies.circle(300,50, f.radius, {
       label: f.label,
