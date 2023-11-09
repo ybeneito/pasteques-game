@@ -2,21 +2,7 @@ import { Engine, Render, Runner, World, Events, Bodies, Body, Sleeping } from "m
 import { AddNewFruit } from "./modules/addNewFruit"
 import { getBox } from "./modules/box"
 import { FRUITS } from "./modules/fruits"
-import { Howl } from "howler"
-
-
-/**
-  const pop = new Howl({
-  src: "/test1.wav"
-})
-
-const jump = new Howl({
-  src: "/test2.wav"
-})
-*/
-
-
-
+import {sounds, pop, jump } from "./modules/sounds"
 
 let nextImg = document.getElementById('imgNext')
 
@@ -58,11 +44,12 @@ const world = engine.world
 // Permet de rajouter les rebords du terrain
 getBox(world)
 
+// Utilisation des sons
+sounds()
+
 
 // Gestion des 2 premiers fruits
-let pair = AddNewFruit()
-let currentFruit = pair[0]
-let nextFruit = pair[1]
+let [currentFruit, nextFruit] = AddNewFruit()
 nextImg.setAttribute("src", `/${nextFruit.label}.png`)
 World.add(world, currentFruit)
 
@@ -109,7 +96,7 @@ Runner.run(runner, engine)
       case "Space":
           disableAction = true;
           Sleeping.set(currentFruit, false)
-         // jump.play()
+          jump.play()
           setTimeout(() => {
               World.remove(world, nextFruit)
               let currentPair = AddNewFruit(nextFruit)
@@ -143,7 +130,7 @@ Events.on(engine, 'collisionStart', (event) => {
   event.pairs.forEach(collision => {
     // Frits identiques
     if (collision.bodyA.label ===  collision.bodyB.label) {
-      // pop.play()
+      pop.play()
       // On retire les watermelon du terrain
       if(collision.bodyA.label === "watermelon") {
         const index = FRUITS.findIndex(fruit => fruit.label === collision.bodyA.label)
@@ -193,11 +180,5 @@ resetScore.addEventListener("click", () => {
   window.location.reload()
 })
 
-/*
-const wireframes = document.getElementById('wireframe')
-wireframes.addEventListener('click', () => {
-  render.options.wireframes = !render.options.wireframes
-})
-*/
 
 

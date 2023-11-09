@@ -9,6 +9,7 @@ const base = Bodies.circle(0,0,0, {
   }
 })
 
+// Génére une paire de fruit et utilise le fruit éxistant si envoyé en paramétre 
 export const AddNewFruit = (old = base) => {
   let newFruit, newNext, f, fNew
 
@@ -48,8 +49,10 @@ export const AddNewFruit = (old = base) => {
       }
     }
   })
-  } else {
-    // Les autres
+  }
+  
+  // Les autres
+  else {
     const index = FRUITS.findIndex(fruit => fruit.label === old.label)
     let nF = FRUITS[index]
     newFruit = Bodies.circle(300,50, nF.radius, {
