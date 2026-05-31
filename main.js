@@ -172,6 +172,11 @@ resetScore.addEventListener("click", () => {
   window.location.reload()
 })
 
+document.getElementById('gameOverRestart').addEventListener("click", () => {
+  window.location.reload()
+})
+
+
 const TOP_LINE_Y = 150
 
 Events.on(engine, 'afterUpdate', () => {
@@ -182,13 +187,12 @@ Events.on(engine, 'afterUpdate', () => {
     if (body.isStatic || body === currentFruit) continue
     if (body.position.y - body.circleRadius < TOP_LINE_Y) {
       gameOver = true
-      if (score > localStorage.getItem("topScore")) {
-        localStorage.setItem("topScore", score)
-        alert(`GAME OVER — Record battu ! Score : ${score}`)
-      } else {
-        alert(`GAME OVER — Score : ${score}`)
-      }
-      window.location.reload()
+      const isRecord = score > localStorage.getItem("topScore")
+      if (isRecord) localStorage.setItem("topScore", score)
+
+      document.getElementById('gameOverScore').textContent = score
+      if (isRecord) document.getElementById('gameOverRecord').classList.remove('hidden')
+      document.getElementById('gameOverOverlay').classList.remove('hidden')
       break
     }
   }
