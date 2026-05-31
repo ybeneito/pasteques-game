@@ -22,6 +22,7 @@ export const AddNewFruit = (old = base) => {
     newFruit = Bodies.circle(300,50, f.radius, {
       label: f.label,
       isSleeping: true,
+      collisionFilter: { category: 0x0001, mask: 0, group: 0 },
       render: {
         fillStyle: f.color,
         sprite: {
@@ -56,6 +57,7 @@ export const AddNewFruit = (old = base) => {
     newFruit = Bodies.circle(300,50, nF.radius, {
       label: nF.label,
       isSleeping: true,
+      collisionFilter: { category: 0x0001, mask: 0, group: 0 },
       render: {
         fillStyle: nF.color,
         sprite: {

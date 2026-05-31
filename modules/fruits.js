@@ -3,6 +3,7 @@ export const FRUITS = [
         label: "cherry",
         radius: 20,
         color: "#F2003C",
+        score: 0
       },
       {
         label: "strawberry",
@@ -50,13 +51,13 @@ export const FRUITS = [
         label: "pineapple",
         radius: 110,
         color: "#F7E608",
-        score: 248
+        score: 256
       },
       {
         label: "melon",
         radius: 135,
         color: "#89CE13",
-        score: 496
+        score: 512
       },
       {
         label: "watermelon",

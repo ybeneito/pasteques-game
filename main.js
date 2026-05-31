@@ -61,7 +61,7 @@ Runner.run(runner, engine)
 
 //Gestion des controls
 // Gestion des inputs utilisateur qd et flèches pour gauche/droite espace/flèche du bas pour lacer le fruit
- window.onkeydown = (e) => {
+window.addEventListener('keydown', (e) => {
   if(disableAction) return;
 
   switch (e.code) {
@@ -70,8 +70,8 @@ Runner.run(runner, engine)
       case "KeyA":
           if(interval) return;
           interval = setInterval(() => {
-            let currentRadius = (currentFruit.vertices[0].x - currentFruit.vertices[9].x) / 2
-              if((currentFruit.position.x + (currentRadius/2)) > (60 + currentRadius))
+            const currentRadius = currentFruit.circleRadius
+              if((currentFruit.position.x - currentRadius) > 60)
               Body.setPosition(currentFruit, {
                   x: currentFruit.position.x - 2,
                   y: currentFruit.position.y
@@ -83,8 +83,8 @@ Runner.run(runner, engine)
       case "KeyD":
           if(interval) return;
           interval = setInterval(() => {
-            let currentRadius = (currentFruit.vertices[0].x - currentFruit.vertices[9].x) / 2
-              if((currentFruit.position.x + (currentRadius/2)) < 560)
+            const currentRadius = currentFruit.circleRadius
+              if((currentFruit.position.x + currentRadius) < 560)
               Body.setPosition(currentFruit, {
                   x: currentFruit.position.x + 2,
                   y: currentFruit.position.y
@@ -95,10 +95,10 @@ Runner.run(runner, engine)
       case "ArrowDown":
       case "Space":
           disableAction = true;
+          currentFruit.collisionFilter = { category: 0x0001, mask: 0xFFFFFFFF, group: 0 }
           Sleeping.set(currentFruit, false)
           jump.play()
           setTimeout(() => {
-              World.remove(world, nextFruit)
               let currentPair = AddNewFruit(nextFruit)
               currentFruit = currentPair[0]
               nextFruit = currentPair[1]
@@ -108,9 +108,9 @@ Runner.run(runner, engine)
           }, 1000);
           break;
   }
-}
+})
 
-window.onkeyup = (e) => { 
+window.addEventListener('keyup', (e) => {
   switch (e.code) {
       case "ArrowLeft":
       case "ArrowRight":
@@ -122,7 +122,7 @@ window.onkeyup = (e) => {
           interval = null
           break;
   }
-}
+})
 
 
 // Gestion des collisions 
@@ -134,9 +134,11 @@ Events.on(engine, 'collisionStart', (event) => {
       // On retire les watermelon du terrain
       if(collision.bodyA.label === "watermelon") {
         const index = FRUITS.findIndex(fruit => fruit.label === collision.bodyA.label)
-        const watermelon = FRUITS[index]
-        displayScore += watermelon.score
-        watermelon += 1
+        const watermelonFruit = FRUITS[index]
+        score += watermelonFruit.score
+        displayScore.innerHTML = score
+        watermelons += 1
+        displayWatermelons.innerHTML = watermelons
         World.remove(world, [collision.bodyA, collision.bodyB])
         return;
       } else {
