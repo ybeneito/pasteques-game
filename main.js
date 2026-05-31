@@ -1,4 +1,4 @@
-import { Engine, Render, Runner, World, Events, Bodies, Body, Sleeping } from "matter-js"
+import { Engine, Render, Runner, World, Composite, Events, Bodies, Body, Sleeping } from "matter-js"
 import { AddNewFruit } from "./modules/addNewFruit"
 import { getBox } from "./modules/box"
 import { FRUITS } from "./modules/fruits"
@@ -22,8 +22,8 @@ displayTopScore.innerHTML = topScore
 const app = document.getElementById('app')
 // L'interval permet de modifier le comportement de déplacement du fruit
 let interval = null
-// Permet de définir si l'utilisateur à le droit de jouer le fruit
 let disableAction = false
+let gameOver = false
 
 // Utilisation de base de la bibliothéque
 const engine = Engine.create({})
@@ -163,24 +163,37 @@ Events.on(engine, 'collisionStart', (event) => {
       }
   }
 
-    if((collision.bodyA.label === "top" || collision.bodyB.label === "top") && !disableAction) {
-      let record = false
-      if(score > localStorage.getItem("topScore")) {
-          localStorage.setItem("topScore", score)
-          record = true
-        }
-        record ? alert(`GAME OVER ---Record Battu--- score: ${score}`) : alert(`GAME OVER score: ${score}`)
-        window.location.reload()
-      }
     }
   )
 })
 
-// Si bug de topScore possibilité de l'éffacer 
-resetScore.addEventListener("click", () => { 
+resetScore.addEventListener("click", () => {
   localStorage.setItem("topScore", 0)
   window.location.reload()
 })
+
+const TOP_LINE_Y = 150
+
+Events.on(engine, 'afterUpdate', () => {
+  if (gameOver || disableAction) return
+
+  const bodies = Composite.allBodies(engine.world)
+  for (const body of bodies) {
+    if (body.isStatic || body === currentFruit) continue
+    if (body.position.y - body.circleRadius < TOP_LINE_Y) {
+      gameOver = true
+      if (score > localStorage.getItem("topScore")) {
+        localStorage.setItem("topScore", score)
+        alert(`GAME OVER — Record battu ! Score : ${score}`)
+      } else {
+        alert(`GAME OVER — Score : ${score}`)
+      }
+      window.location.reload()
+      break
+    }
+  }
+})
+
 
 
 
